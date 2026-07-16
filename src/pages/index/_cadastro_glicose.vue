@@ -38,16 +38,38 @@ export interface MedidaGlicose {
   valor: number;
   momento: string;
 }
+class Glicose {
+  data_hora: string;
+  valor: number;
+  momento: string;
+
+  constructor(data_hora: string, valor: number, momento: string) {
+    this.data_hora = data_hora;
+    this.valor = valor;
+    this.momento = momento;
+  }
+}
 const formulario = ref<MedidaGlicose>({
   data_hora: '',
   valor: 0,
   momento: "ANTES ALMOÇO", 
 });
+
+
+
 const onSubmit = async() => {
   try{
     console.log(new Date().toISOString());
-    formulario.value.data_hora = new Date().toISOString(); 
-    $q.localStorage.set('medidasGlicose', formulario.value);
+    formulario.value.data_hora = new Date().toISOString();  
+    const glicoseDB = $q.localStorage.getItem('GlicoseDB');
+    if (!glicoseDB) {  
+      $q.localStorage.set('GlicoseDB', [formulario.value]);
+    } else { 
+      const novo = glicoseDB as Glicose[];;
+      novo.push(formulario.value);
+      $q.localStorage.set('GlicoseDB', novo);
+    }
+       
     $q.notify({
       message: 'Dados salvos com sucesso!',
       color: 'positive'

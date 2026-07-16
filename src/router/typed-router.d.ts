@@ -39,6 +39,7 @@ declare module 'vue-router/auto-routes' {
       | '//(index)'
       | '//_cadastro_glicose'
       | '//_cadastro_usuario'
+      | '//_home_glicose'
       | '//_home_usuario'
       | '//second'
     >,
@@ -59,6 +60,13 @@ declare module 'vue-router/auto-routes' {
     '//_cadastro_usuario': RouteRecordInfo<
       '//_cadastro_usuario',
       '/_cadastro_usuario',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '//_home_glicose': RouteRecordInfo<
+      '//_home_glicose',
+      '/_home_glicose',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -103,6 +111,7 @@ declare module 'vue-router/auto-routes' {
         | '//(index)'
         | '//_cadastro_glicose'
         | '//_cadastro_usuario'
+        | '//_home_glicose'
         | '//_home_usuario'
         | '//second'
       views:
@@ -129,6 +138,14 @@ declare module 'vue-router/auto-routes' {
     'src/pages/index/_cadastro_usuario.vue': {
       routes:
         | '//_cadastro_usuario'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
+    'src/pages/index/_home_glicose.vue': {
+      routes:
+        | '//_home_glicose'
       views:
         | never
       pathParamNames:
