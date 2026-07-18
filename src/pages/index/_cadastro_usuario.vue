@@ -31,32 +31,17 @@
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
+import { Usuario } from '@/types/Usuario';
+import type { Usuario_interface } from '@/types/Usuario';
 
 const $q = useQuasar();
 const router = useRouter();
-
-interface Usuario_interface {
-  id: string;
-  nome: string;
-  data_nascimento: string;
-}
 
 const formulario = ref<Usuario_interface>({
   id: '',
   nome: '',
   data_nascimento: ''
 });
-
-class Usuario implements Usuario_interface {
-    id: string;
-    nome: string;
-    data_nascimento: string;
-    constructor(id: string, nome: string, data_nascimento: string) {
-        this.id = id;
-        this.nome = nome;
-        this.data_nascimento = data_nascimento;
-    }
-}
 
 function validarSubmit() {
   if (formulario.value.nome === '' || formulario.value.data_nascimento === '') {

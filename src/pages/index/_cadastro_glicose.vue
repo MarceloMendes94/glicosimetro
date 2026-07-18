@@ -1,8 +1,7 @@
 <template>
    <div class="row justify-center">
   <div class="col-12 col-md-8 col-lg-6">
-  <div class="q-pa-md q-gutter-md q-gutter-y-lg" >
-  
+  <div class="q-pa-md q-gutter-md q-gutter-y-lg" >  
     <q-form @submit="onSubmit">      
       <q-card class="my-card" >
           <q-card-section>   
@@ -29,33 +28,19 @@
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
-const router = useRouter();
-const $q = useQuasar();
+import type { MedidaGlicose } from '@/types/Glicose';
+import { Glicose } from '@/types/Glicose';
+
 const options = ['CAFÉ DA MANHÃ', 'ANTES ALMOÇO', '2 HRS APÓS ALMOÇO', 'ANTES JANTAR', '2HRS APÓS JANTAR', 'MADRUGADA'] ;
 
-export interface MedidaGlicose {
-  data_hora: string;
-  valor: number;
-  momento: string;
-}
-class Glicose {
-  data_hora: string;
-  valor: number;
-  momento: string;
+const router = useRouter();
+const $q = useQuasar();
 
-  constructor(data_hora: string, valor: number, momento: string) {
-    this.data_hora = data_hora;
-    this.valor = valor;
-    this.momento = momento;
-  }
-}
 const formulario = ref<MedidaGlicose>({
   data_hora: '',
   valor: 0,
   momento: "ANTES ALMOÇO", 
 });
-
-
 
 const onSubmit = async() => {
   try{
@@ -64,12 +49,14 @@ const onSubmit = async() => {
     const glicoseDB = $q.localStorage.getItem('GlicoseDB');
     if (!glicoseDB) {  
       $q.localStorage.set('GlicoseDB', [formulario.value]);
-    } else { 
-      const novo = glicoseDB as Glicose[];;
-      novo.push(formulario.value);
-      $q.localStorage.set('GlicoseDB', novo);
     }
-       
+    else
+    { 
+      const novo = glicoseDB as Glicose[];
+      const glicose = new Glicose( formulario.value.data_hora, formulario.value.valor, formulario.value.momento );
+      novo.push(glicose);      
+      $q.localStorage.set('GlicoseDB', novo);
+    }       
     $q.notify({
       message: 'Dados salvos com sucesso!',
       color: 'positive'

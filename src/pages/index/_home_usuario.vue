@@ -5,6 +5,7 @@
       <q-card class="my-card" >
           <q-card-section>   
               <h6>Bem vindo, {{ usuario.nome }}.</H6>
+                {{ usuario.calcularIdade() }}
            
           </q-card-section>        
       </q-card>
@@ -14,16 +15,18 @@
 </template>
 
 <script setup lang="ts">
-//
 import { useQuasar } from 'quasar';
-//import { useRouter } from 'vue-router';
-//const router = useRouter();
+import { Usuario } from '@/types/Usuario';
+
 const $q = useQuasar();
-const user = $q.localStorage.getItem("User");
-interface Usuario_interface {
-  id: string;
-  nome: string;
-  data_nascimento: string;
-}
-const usuario: Usuario_interface = user as Usuario_interface;
+
+const user = $q.localStorage.getItem("User") as Usuario;
+
+const usuario = new Usuario(
+  user.id,
+  user.nome,
+  user.data_nascimento
+);
+
+console.log(usuario.calcularIdade());
 </script>
